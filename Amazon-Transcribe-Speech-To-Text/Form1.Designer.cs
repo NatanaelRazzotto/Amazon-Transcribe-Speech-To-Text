@@ -39,22 +39,44 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button6 = new System.Windows.Forms.Button();
             this.trackBarStateAudio = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btnSelectBucktes = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.cbBucketsInputS3 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbBucketsOutputS3 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnAnalizer = new System.Windows.Forms.Button();
+            this.btnSearchFiles = new System.Windows.Forms.Button();
             this.panelExibicao = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageFile = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pgbUploadFlie = new System.Windows.Forms.ProgressBar();
+            this.cbFilesBucket = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tbFileAudio = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblNameBucketInput = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.ofdSearchFiles = new System.Windows.Forms.OpenFileDialog();
+            this.lblFileSelecionado = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarStateAudio)).BeginInit();
             this.panel1.SuspendLayout();
+            this.panelExibicao.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPageFile.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -65,7 +87,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
             this.panelMenu.Name = "panelMenu";
-            this.panelMenu.Size = new System.Drawing.Size(858, 162);
+            this.panelMenu.Size = new System.Drawing.Size(858, 168);
             this.panelMenu.TabIndex = 0;
             // 
             // panel2
@@ -78,9 +100,9 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel2.Controls.Add(this.button6);
             this.panel2.Controls.Add(this.trackBarStateAudio);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 97);
+            this.panel2.Location = new System.Drawing.Point(0, 99);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(858, 65);
+            this.panel2.Size = new System.Drawing.Size(858, 69);
             this.panel2.TabIndex = 1;
             // 
             // textBox1
@@ -110,9 +132,9 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button8.BackgroundImage")));
             this.button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button8.Location = new System.Drawing.Point(23, 17);
+            this.button8.Location = new System.Drawing.Point(45, 20);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(32, 33);
+            this.button8.Size = new System.Drawing.Size(26, 26);
             this.button8.TabIndex = 9;
             this.button8.UseVisualStyleBackColor = true;
             // 
@@ -121,9 +143,9 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button7.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button7.BackgroundImage")));
             this.button7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button7.Location = new System.Drawing.Point(136, 17);
+            this.button7.Location = new System.Drawing.Point(136, 20);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(32, 33);
+            this.button7.Size = new System.Drawing.Size(26, 26);
             this.button7.TabIndex = 8;
             this.button7.UseVisualStyleBackColor = true;
             // 
@@ -132,30 +154,28 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button6.BackgroundImage")));
             this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Location = new System.Drawing.Point(61, 5);
+            this.button6.Location = new System.Drawing.Point(77, 10);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(69, 56);
+            this.button6.Size = new System.Drawing.Size(53, 45);
             this.button6.TabIndex = 7;
             this.button6.UseVisualStyleBackColor = true;
             // 
             // trackBarStateAudio
             // 
-            this.trackBarStateAudio.Location = new System.Drawing.Point(244, 22);
+            this.trackBarStateAudio.Location = new System.Drawing.Point(261, 22);
             this.trackBarStateAudio.Name = "trackBarStateAudio";
-            this.trackBarStateAudio.Size = new System.Drawing.Size(480, 45);
+            this.trackBarStateAudio.Size = new System.Drawing.Size(463, 45);
             this.trackBarStateAudio.TabIndex = 6;
             this.trackBarStateAudio.TickStyle = System.Windows.Forms.TickStyle.None;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.BurlyWood;
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.btnSelectBucktes);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.cbBucketsInputS3);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.cbBucketsOutputS3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -163,36 +183,36 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel1.Size = new System.Drawing.Size(858, 93);
             this.panel1.TabIndex = 0;
             // 
-            // label4
+            // btnSelectBucktes
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(718, 41);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 15);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Análisar";
+            this.btnSelectBucktes.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSelectBucktes.BackgroundImage")));
+            this.btnSelectBucktes.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSelectBucktes.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSelectBucktes.Location = new System.Drawing.Point(774, 23);
+            this.btnSelectBucktes.Name = "btnSelectBucktes";
+            this.btnSelectBucktes.Size = new System.Drawing.Size(57, 50);
+            this.btnSelectBucktes.TabIndex = 15;
+            this.btnSelectBucktes.UseVisualStyleBackColor = true;
+            this.btnSelectBucktes.Click += new System.EventHandler(this.btnSelectBucktes_Click);
             // 
-            // button2
+            // label2
             // 
-            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button2.Location = new System.Drawing.Point(774, 23);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(59, 50);
-            this.button2.TabIndex = 13;
-            this.button2.UseVisualStyleBackColor = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(261, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(105, 15);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Bucket de Entrada:";
             // 
-            // button1
+            // cbBucketsInputS3
             // 
-            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Location = new System.Drawing.Point(667, 10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 32);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = true;
+            this.cbBucketsInputS3.BackColor = System.Drawing.Color.NavajoWhite;
+            this.cbBucketsInputS3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbBucketsInputS3.FormattingEnabled = true;
+            this.cbBucketsInputS3.Location = new System.Drawing.Point(374, 15);
+            this.cbBucketsInputS3.Name = "cbBucketsInputS3";
+            this.cbBucketsInputS3.Size = new System.Drawing.Size(359, 23);
+            this.cbBucketsInputS3.TabIndex = 15;
             // 
             // label3
             // 
@@ -203,33 +223,15 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.label3.TabIndex = 4;
             this.label3.Text = "Bucket de Destino:";
             // 
-            // comboBox1
+            // cbBucketsOutputS3
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.NavajoWhite;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(374, 55);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(255, 23);
-            this.comboBox1.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(261, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(107, 15);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Name File (audio) :";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.NavajoWhite;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(374, 14);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(287, 23);
-            this.textBox2.TabIndex = 1;
+            this.cbBucketsOutputS3.BackColor = System.Drawing.Color.NavajoWhite;
+            this.cbBucketsOutputS3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbBucketsOutputS3.FormattingEnabled = true;
+            this.cbBucketsOutputS3.Location = new System.Drawing.Point(374, 55);
+            this.cbBucketsOutputS3.Name = "cbBucketsOutputS3";
+            this.cbBucketsOutputS3.Size = new System.Drawing.Size(359, 23);
+            this.cbBucketsOutputS3.TabIndex = 3;
             // 
             // label1
             // 
@@ -241,14 +243,193 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.label1.TabIndex = 0;
             this.label1.Text = "AWS TRANSCRIBE";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(335, 66);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 15);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Análisar";
+            // 
+            // btnAnalizer
+            // 
+            this.btnAnalizer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAnalizer.BackgroundImage")));
+            this.btnAnalizer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAnalizer.Enabled = false;
+            this.btnAnalizer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAnalizer.Location = new System.Drawing.Point(331, 13);
+            this.btnAnalizer.Name = "btnAnalizer";
+            this.btnAnalizer.Size = new System.Drawing.Size(59, 50);
+            this.btnAnalizer.TabIndex = 13;
+            this.btnAnalizer.UseVisualStyleBackColor = true;
+            this.btnAnalizer.Click += new System.EventHandler(this.btnAnalizer_Click);
+            // 
+            // btnSearchFiles
+            // 
+            this.btnSearchFiles.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSearchFiles.BackgroundImage")));
+            this.btnSearchFiles.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSearchFiles.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSearchFiles.Location = new System.Drawing.Point(340, 113);
+            this.btnSearchFiles.Name = "btnSearchFiles";
+            this.btnSearchFiles.Size = new System.Drawing.Size(37, 32);
+            this.btnSearchFiles.TabIndex = 12;
+            this.btnSearchFiles.UseVisualStyleBackColor = true;
+            this.btnSearchFiles.Click += new System.EventHandler(this.btnSearchFiles_Click);
+            // 
             // panelExibicao
             // 
-            this.panelExibicao.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.panelExibicao.BackColor = System.Drawing.Color.Tan;
+            this.panelExibicao.Controls.Add(this.tabControl1);
             this.panelExibicao.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExibicao.Location = new System.Drawing.Point(0, 162);
+            this.panelExibicao.Location = new System.Drawing.Point(0, 168);
             this.panelExibicao.Name = "panelExibicao";
-            this.panelExibicao.Size = new System.Drawing.Size(858, 288);
+            this.panelExibicao.Size = new System.Drawing.Size(858, 283);
             this.panelExibicao.TabIndex = 1;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageFile);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(858, 283);
+            this.tabControl1.TabIndex = 0;
+            // 
+            // tabPageFile
+            // 
+            this.tabPageFile.BackColor = System.Drawing.Color.BurlyWood;
+            this.tabPageFile.Controls.Add(this.panel4);
+            this.tabPageFile.Controls.Add(this.panel3);
+            this.tabPageFile.Location = new System.Drawing.Point(4, 24);
+            this.tabPageFile.Name = "tabPageFile";
+            this.tabPageFile.Size = new System.Drawing.Size(850, 255);
+            this.tabPageFile.TabIndex = 0;
+            this.tabPageFile.Text = "Gerenciar Files In Bucket";
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.Color.Tan;
+            this.panel4.Controls.Add(this.lblFileSelecionado);
+            this.panel4.Controls.Add(this.label10);
+            this.panel4.Controls.Add(this.btnAnalizer);
+            this.panel4.Controls.Add(this.label4);
+            this.panel4.Location = new System.Drawing.Point(439, 9);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(403, 238);
+            this.panel4.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel3.BackColor = System.Drawing.Color.Tan;
+            this.panel3.Controls.Add(this.pgbUploadFlie);
+            this.panel3.Controls.Add(this.cbFilesBucket);
+            this.panel3.Controls.Add(this.label8);
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.tbFileAudio);
+            this.panel3.Controls.Add(this.label7);
+            this.panel3.Controls.Add(this.btnSearchFiles);
+            this.panel3.Controls.Add(this.label6);
+            this.panel3.Controls.Add(this.lblNameBucketInput);
+            this.panel3.Controls.Add(this.label5);
+            this.panel3.Location = new System.Drawing.Point(3, 9);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(430, 238);
+            this.panel3.TabIndex = 0;
+            // 
+            // pgbUploadFlie
+            // 
+            this.pgbUploadFlie.Location = new System.Drawing.Point(222, 96);
+            this.pgbUploadFlie.Name = "pgbUploadFlie";
+            this.pgbUploadFlie.Size = new System.Drawing.Size(112, 18);
+            this.pgbUploadFlie.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.pgbUploadFlie.TabIndex = 16;
+            this.pgbUploadFlie.Visible = false;
+            // 
+            // cbFilesBucket
+            // 
+            this.cbFilesBucket.BackColor = System.Drawing.Color.NavajoWhite;
+            this.cbFilesBucket.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbFilesBucket.FormattingEnabled = true;
+            this.cbFilesBucket.Location = new System.Drawing.Point(26, 196);
+            this.cbFilesBucket.Name = "cbFilesBucket";
+            this.cbFilesBucket.Size = new System.Drawing.Size(308, 23);
+            this.cbFilesBucket.TabIndex = 15;
+            this.cbFilesBucket.SelectedValueChanged += new System.EventHandler(this.cbFilesBucket_SelectedValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Bahnschrift Condensed", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(13, 163);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(211, 18);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Selecionar Arquivo: Já Incluso:";
+            // 
+            // button1
+            // 
+            this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Location = new System.Drawing.Point(383, 113);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(37, 32);
+            this.button1.TabIndex = 13;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // tbFileAudio
+            // 
+            this.tbFileAudio.BackColor = System.Drawing.Color.NavajoWhite;
+            this.tbFileAudio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbFileAudio.Location = new System.Drawing.Point(26, 120);
+            this.tbFileAudio.Name = "tbFileAudio";
+            this.tbFileAudio.Size = new System.Drawing.Size(308, 23);
+            this.tbFileAudio.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Bahnschrift Condensed", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(11, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(147, 18);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Incluir Novo Arquivo:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(24, 102);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(107, 15);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Name File (audio) :";
+            // 
+            // lblNameBucketInput
+            // 
+            this.lblNameBucketInput.AutoSize = true;
+            this.lblNameBucketInput.Location = new System.Drawing.Point(38, 40);
+            this.lblNameBucketInput.Name = "lblNameBucketInput";
+            this.lblNameBucketInput.Size = new System.Drawing.Size(102, 15);
+            this.lblNameBucketInput.TabIndex = 1;
+            this.lblNameBucketInput.Text = "Bucket de Entrada";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(13, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(224, 19);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Gerenciar Arquivos no Bucket";
             // 
             // button3
             // 
@@ -283,11 +464,34 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button5.TabIndex = 3;
             this.button5.UseVisualStyleBackColor = true;
             // 
+            // ofdSearchFiles
+            // 
+            this.ofdSearchFiles.FileName = "ofdSearchFiles";
+            // 
+            // lblFileSelecionado
+            // 
+            this.lblFileSelecionado.AutoSize = true;
+            this.lblFileSelecionado.Location = new System.Drawing.Point(43, 40);
+            this.lblFileSelecionado.Name = "lblFileSelecionado";
+            this.lblFileSelecionado.Size = new System.Drawing.Size(106, 15);
+            this.lblFileSelecionado.TabIndex = 16;
+            this.lblFileSelecionado.Text = "Audio Selecionado";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(18, 13);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(159, 19);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Arquivo Selecionado\r\n";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 450);
+            this.ClientSize = new System.Drawing.Size(858, 451);
             this.Controls.Add(this.panelExibicao);
             this.Controls.Add(this.panelMenu);
             this.Name = "Form1";
@@ -298,6 +502,13 @@ namespace Amazon_Transcribe_Speech_To_Text
             ((System.ComponentModel.ISupportInitialize)(this.trackBarStateAudio)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panelExibicao.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageFile.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -318,13 +529,30 @@ namespace Amazon_Transcribe_Speech_To_Text
         private System.Windows.Forms.TrackBar trackBarStateAudio;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbBucketsOutputS3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnAnalizer;
+        private System.Windows.Forms.Button btnSearchFiles;
+        private System.Windows.Forms.OpenFileDialog ofdSearchFiles;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageFile;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblNameBucketInput;
+        private System.Windows.Forms.ComboBox cbFilesBucket;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbFileAudio;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cbBucketsInputS3;
+        private System.Windows.Forms.Button btnSelectBucktes;
+        private System.Windows.Forms.ProgressBar pgbUploadFlie;
+        private System.Windows.Forms.Label lblFileSelecionado;
+        private System.Windows.Forms.Label label10;
     }
 }
 
