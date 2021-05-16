@@ -1,4 +1,5 @@
-﻿using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
+﻿using Amazon.TranscribeService;
+using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Models;
 using System;
 using System.Collections.Generic;
@@ -128,7 +129,24 @@ namespace Amazon_Transcribe_Speech_To_Text
 
         private void btnAnalizer_Click(object sender, EventArgs e)
         {
+            pgbAnalizer.Minimum = 0;
+            pgbAnalizer.Maximum = 100;
             controller.executeTranscribeToS3();
+        }
+
+        private void btnLoadTranscription_Click(object sender, EventArgs e)
+        {
+            controller.TranscribeObject();
+            tabControlBody.SelectedIndex = 1;
+        }
+
+        public void setJobProperties(string nameJob, TranscriptionJobStatus status, string formatMidia, int incrementProgrees)
+        {
+            lblNameJob.Text = nameJob;
+            lblStatusJob.Text = status.ToString();
+            //lblFormatMidia.Text = formatMidia.ToString();
+            pgbAnalizer.Increment(incrementProgrees);
+
         }
     }
 }

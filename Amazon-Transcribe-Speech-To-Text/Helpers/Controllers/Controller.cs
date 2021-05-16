@@ -1,4 +1,6 @@
-﻿using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
+﻿using Amazon.TranscribeService;
+using Amazon.TranscribeService.Model;
+using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using AWS_Rekognition_Objects.Helpers.Model;
 using System;
 using System.Collections.Generic;
@@ -10,14 +12,14 @@ using System.Windows.Forms;
 
 namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
 {
-    public class Controller
+    public class Controller : IController
     {
         private IViewTranscribe formTranscribe;
         private AWSServices awsServices;
         public Controller(IViewTranscribe formTranscribe)
         {
             this.formTranscribe = formTranscribe;
-            this.awsServices = new AWSServices();
+            this.awsServices = new AWSServices(this);
         }
         public List<string> getLoadS3ListBuckets() {
            return awsServices.S3ListBuckets();        
@@ -73,7 +75,20 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
 
         public async void executeTranscribeToS3()
         {
-           await awsServices.ExecuteTranscribe(awsServices.FileNameActual, awsServices.BucketNameOutput);
+           await awsServices.requestExecuteTranscribe(awsServices.FileNameActual, awsServices.BucketNameOutput);
+        }
+
+        public void ViewStatusofTranscriptJob(TranscriptionJob transcriptionJob, int incrementProgrees)
+        {
+            string nameJob = transcriptionJob.TranscriptionJobName;
+            TranscriptionJobStatus status = transcriptionJob.TranscriptionJobStatus;
+            string formatMidia = transcriptionJob.MediaFormat;
+            formTranscribe.setJobProperties(nameJob, status, formatMidia, incrementProgrees);
+        }
+
+        public async void TranscribeObject()
+        {
+            string jsonString = await awsServices.getObjectTranscribeS3();
         }
     }
 }

@@ -6,9 +6,12 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Amazon.TranscribeService;
 using Amazon.TranscribeService.Model;
+using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,11 +21,14 @@ namespace AWS_Rekognition_Objects.Helpers.Model
     {
         AWSCredentials awsCredentials;
         AmazonS3Client s3Client;
+        IController controller;
         private static readonly RegionEndpoint region = RegionEndpoint.USEast1;
 
         private string bucketNameInput, bucketNameOutput;
 
         private string fileNameActual;
+
+        private string JobName;
 
         private List<string> ExistingImagesBucket;
 
@@ -42,8 +48,9 @@ namespace AWS_Rekognition_Objects.Helpers.Model
             set => bucketNameOutput = value;
         }
 
-        public AWSServices() {
+        public AWSServices(IController controller) {
             bucketNameInput = "unibrasil-transcriberazz-input";
+            this.controller = controller;
         }
 
         public void setBucktes(string bucketInput, string bucketOutput) {
@@ -136,9 +143,70 @@ namespace AWS_Rekognition_Objects.Helpers.Model
             }        
          
         }
-        public async Task ExecuteTranscribe(string fileName, string selectedBucketName)
+        public async Task<bool> DownloadFileS3(String fileName) {
+            try
+            {
+                if (S3Client())
+                {
+                    TransferUtility fileTransferUtility = new TransferUtility(s3Client);
+                    TransferUtilityDownloadRequest transferUtilityDownloadRequest = new TransferUtilityDownloadRequest()
+                    {
+                        BucketName = this.bucketNameOutput,
+                        Key = fileName,
+                        FilePath = ""
+                    };
+                    //https://docs.aws.amazon.com/sdkfornet/latest/apidocs/items/TS3TransferTransferUtilityDownloadRequestNET45.html
+                    //https://csharp.hotexamples.com/pt/examples/Amazon.S3.Transfer/TransferUtility/Download/php-transferutility-download-method-examples.html
+                    return true;
+                }
+                else
+                {
+                    return false;  
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<string> getObjectTranscribeS3()
         {
-            AmazonTranscribeServiceClient TranscribeServiceClient = new AmazonTranscribeServiceClient(awsCredentials, region);
+            try
+            {
+                if (S3Client())
+                {
+                    GetObjectRequest getObjectRequest = new GetObjectRequest()
+                    {
+                        BucketName = bucketNameOutput,
+                        Key = JobName
+                    };
+                    using (GetObjectResponse getObjectResponse = await s3Client.GetObjectAsync(getObjectRequest))
+                    {
+                        using (StreamReader reader = new StreamReader(getObjectResponse.ResponseStream))
+                        {
+                            string contents = reader.ReadToEnd();
+                            return contents;
+                        }
+                    }
+                }
+                return String.Empty;
+            }
+            catch (WebException)
+            {
+                throw;
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+            catch (AmazonS3Exception)
+            {
+                throw;
+            }
+        }
+        public async Task<StartTranscriptionJobResponse> ExecuteTranscribe(AmazonTranscribeServiceClient TranscribeClient, string fileName, string selectedBucketName)
+        {
             StartTranscriptionJobRequest JobRequest = new StartTranscriptionJobRequest
             {
                 Media = new Media { MediaFileUri = $"s3://{bucketNameInput}/{fileName}" },
@@ -148,13 +216,67 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                 TranscriptionJobName = $"Trascribe-Reuniao-{DateTime.Now.ToString("yyyymmddhhmmss")}"
             };
 
-            StartTranscriptionJobResponse jobResponse = await TranscribeServiceClient.StartTranscriptionJobAsync(JobRequest);
+            StartTranscriptionJobResponse jobResponse = await TranscribeClient.StartTranscriptionJobAsync(JobRequest);
 
-            GetTranscriptionJobRequest jobStatus = new GetTranscriptionJobRequest()
+            return jobResponse;
+
+        }
+
+        public async Task requestExecuteTranscribe(string fileName, string selectedBucketName) 
+        {
+            AmazonTranscribeServiceClient TranscribeServiceClient = new AmazonTranscribeServiceClient(awsCredentials, region);
+
+            StartTranscriptionJobResponse jobTranscribe = await ExecuteTranscribe(TranscribeServiceClient, fileName, selectedBucketName);
+
+            if (jobTranscribe.HttpStatusCode == HttpStatusCode.OK)
             {
-                TranscriptionJobName = JobRequest.TranscriptionJobName
-            };
-            GetTranscriptionJobResponse jobData = await TranscribeServiceClient.GetTranscriptionJobAsync(jobStatus);
+                GetTranscriptionJobRequest jobStatus = new GetTranscriptionJobRequest()
+                {
+                    TranscriptionJobName = jobTranscribe.TranscriptionJob.TranscriptionJobName
+                };
+
+                GetTranscriptionJobResponse jobDataTranscribe;
+                bool runningJobStatus = true;
+                int incrementProgree = 0;
+                while (runningJobStatus)
+                {
+                    jobDataTranscribe = await TranscribeServiceClient.GetTranscriptionJobAsync(jobStatus);
+                    TranscriptionJob transcriptionJob = jobDataTranscribe.TranscriptionJob;
+                    if (transcriptionJob.TranscriptionJobStatus == TranscriptionJobStatus.COMPLETED)
+                    {
+                        JobName = extractFileKey(transcriptionJob.Transcript.TranscriptFileUri);
+                        incrementProgree = 100;
+                        controller.ViewStatusofTranscriptJob(transcriptionJob, incrementProgree);
+                        //  definedFileKey(transcriptionJob.Media.MediaFileUri);
+                        runningJobStatus = false;
+                    }
+                    else
+                    {
+                        controller.ViewStatusofTranscriptJob(transcriptionJob, incrementProgree);
+                        if (incrementProgree > 80)
+                        {
+                            incrementProgree = 0;
+                        }
+                        else
+                        {
+                            incrementProgree += 5;
+                        }
+                       
+                        await Task.Delay(5000);
+                    }
+                }
+            }
+            else
+            {
+
+            }  
+        }
+
+        private string extractFileKey(string mediaFileUri)
+        {
+            string[] nameFileSplit = mediaFileUri.Split('/');
+            string nomeFile = nameFileSplit[nameFileSplit.Length - 1];
+            return nomeFile;
         }
 
         public List<string> audioInputBucketNames()
