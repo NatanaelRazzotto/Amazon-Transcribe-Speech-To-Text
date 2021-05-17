@@ -1,6 +1,7 @@
 ﻿using Amazon.TranscribeService;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Models;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,12 +17,13 @@ namespace Amazon_Transcribe_Speech_To_Text
 {
     public partial class Form1 : Form, IViewTranscribe
     {
-        Controller controller; 
+        Controller controller;
         public Form1()
         {
             InitializeComponent();
             controller = new Controller(this);
-            List<string> buckets = controller.getLoadS3ListBuckets();
+            //List<string> buckets = controller.getLoadS3ListBuckets();
+            List<string> buckets = null;
             if (buckets != null)
             {
                 foreach (string buckte in buckets)
@@ -88,7 +90,26 @@ namespace Amazon_Transcribe_Speech_To_Text
             }
             return false;
         }
-
+        public bool updateComboNameTranscribes(string nameBucket, List<string> nameTranscribe)
+        {
+            if (!String.IsNullOrEmpty(nameBucket))
+            {
+                lblNameBucketOutput.Text = nameBucket;
+                if (nameTranscribe != null)
+                {
+                    foreach (string item in nameTranscribe)
+                    {
+                        cbFilesBucketOutput.Items.Add(item);
+                    }
+                    return true;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public async Task displayStatusProgressFile(bool state, string fileName = null)
         {
             if (state)
@@ -145,8 +166,44 @@ namespace Amazon_Transcribe_Speech_To_Text
             lblNameJob.Text = nameJob;
             lblStatusJob.Text = status.ToString();
             //lblFormatMidia.Text = formatMidia.ToString();
-            pgbAnalizer.Increment(incrementProgrees);
+            pgbAnalizer.Value = incrementProgrees ;
 
+        }
+
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            controller.setPlayMedia();
+        }
+
+        public void displayStatusCurrentProgress(TimeSpan TotalTime, TimeSpan currentAudio)
+        {
+            if (lblTempoTotal.Text == "00:00:00")
+            {
+                lblTempoTotal.Text = $"{TotalTime.Hours}:{TotalTime.Minutes}:{TotalTime.Seconds}";
+                int currentMilliseconds = (int)TotalTime.TotalMilliseconds;
+                trackBarStateAudio.Maximum = (int)currentMilliseconds;
+                trackBarStateAudio.Minimum = 0;
+            }
+            if (currentAudio.TotalMilliseconds != 0)
+            {
+                tbAccountant.Text = $"{currentAudio.Hours}:{currentAudio.Minutes}:{currentAudio.Seconds}";
+                int currentMilliseconds = (int)currentAudio.TotalMilliseconds;
+                int value = currentMilliseconds;
+                if (value < trackBarStateAudio.Maximum)
+                {
+                    trackBarStateAudio.Value = value;
+                }
+                else
+                {
+                    trackBarStateAudio.Value = trackBarStateAudio.Maximum;
+                }
+            }
+        }
+
+        private void trackBarStateAudio_ValueChanged(object sender, EventArgs e)
+        {
+            double timeSelect = trackBarStateAudio.Value;
+            controller.definedPositionAudioMilisseconds(timeSelect);
         }
     }
 }

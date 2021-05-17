@@ -10,7 +10,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
     {
         public string jobName { get; set; }
         public string accountId { get; set; }
-        public Results results { get; set; }
+        public ResultsTranscribed results { get; set; }
         public string status { get; set; }
     }
 }

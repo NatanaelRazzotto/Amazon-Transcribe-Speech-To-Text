@@ -1,7 +1,9 @@
 ﻿using Amazon.TranscribeService;
 using Amazon.TranscribeService.Model;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
+using Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity;
 using AWS_Rekognition_Objects.Helpers.Model;
+using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +18,12 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
     {
         private IViewTranscribe formTranscribe;
         private AWSServices awsServices;
+        private PlayerMedia playerMedia;
         public Controller(IViewTranscribe formTranscribe)
         {
             this.formTranscribe = formTranscribe;
             this.awsServices = new AWSServices(this);
+            this.playerMedia = new PlayerMedia(this);
         }
         public List<string> getLoadS3ListBuckets() {
            return awsServices.S3ListBuckets();        
@@ -89,6 +93,55 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         public async void TranscribeObject()
         {
             string jsonString = await awsServices.getObjectTranscribeS3();
+            Transcribed transcribed = Newtonsoft.Json.JsonConvert.DeserializeObject<Transcribed>(jsonString);
         }
+
+        #region controlesAudio
+        public async void setPlayMedia()
+        {
+            if (!playerMedia.checkExecute())
+            {
+                await playerMedia.clickPlay();
+            }
+            else
+            {
+                playerMedia.clickPaused();
+            }
+            
+            await trackAudio();
+        }
+        public void definedPositionAudioMilisseconds(double timeSelect)
+        {
+            //double newTimeSelect = Convert.ToDouble(timeSelect);
+            playerMedia.defineNewCurrentTimeMilisseconds(timeSelect);
+        }
+        public async Task trackAudio()
+        {
+            bool playMedia = true;
+            PlaybackState statePlayback = playerMedia.getPlaybackState();
+
+            while (playMedia)
+            {
+                if (statePlayback == PlaybackState.Playing)
+                {
+                    await Task.Delay(1000);
+                    TimeSpan currentAudio = playerMedia.getCurrentTime();
+                    TimeSpan TotalTime = playerMedia.getTotalTimeAudio();                    
+                    //int currentMilliseconds = (int)currentAudio.TotalMilliseconds;
+                    
+                    formTranscribe.displayStatusCurrentProgress(TotalTime, currentAudio);
+                }
+                else if (statePlayback == PlaybackState.Paused)
+                {
+                    await Task.Delay(2000);
+                }
+                else if (statePlayback == PlaybackState.Stopped)
+                {
+
+                }
+            }
+
+        }
+        #endregion
     }
 }

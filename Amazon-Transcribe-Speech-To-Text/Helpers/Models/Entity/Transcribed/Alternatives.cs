@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
 {
-    public class Results
+    public class Alternatives
     {
-        public List<string> transcripts { get; set; }
-        public List<string> items { get; set; }
+        public float confidence { get; set; }
+        public string content { get; set; }
     }
 }

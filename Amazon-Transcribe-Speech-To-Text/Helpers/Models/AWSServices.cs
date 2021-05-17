@@ -188,7 +188,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                             string contents = reader.ReadToEnd();
                             return contents;
                         }
-                    }
+                    }                    
                 }
                 return String.Empty;
             }
@@ -213,7 +213,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                 OutputBucketName = selectedBucketName,
                 LanguageCode = LanguageCode.PtBR,
                 MediaFormat = MediaFormat.Mp3,
-                TranscriptionJobName = $"Trascribe-Reuniao-{DateTime.Now.ToString("yyyymmddhhmmss")}"
+                TranscriptionJobName = $"Transcribe-Reuniao-{DateTime.Now.ToString("yyyymmddhhmmss")}"
             };
 
             StartTranscriptionJobResponse jobResponse = await TranscribeClient.StartTranscriptionJobAsync(JobRequest);

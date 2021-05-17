@@ -32,11 +32,11 @@ namespace Amazon_Transcribe_Speech_To_Text
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbAccountant = new System.Windows.Forms.TextBox();
             this.lblTempoTotal = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
             this.trackBarStateAudio = new System.Windows.Forms.TrackBar();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSelectBucktes = new System.Windows.Forms.Button();
@@ -64,6 +64,10 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.lblFileSelecionado = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.cbFilesBucketOutput = new System.Windows.Forms.ComboBox();
+            this.lblNameBucketOutput = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.pgbUploadFlie = new System.Windows.Forms.ProgressBar();
             this.cbFilesBucket = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -104,11 +108,11 @@ namespace Amazon_Transcribe_Speech_To_Text
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.BurlyWood;
-            this.panel2.Controls.Add(this.textBox1);
+            this.panel2.Controls.Add(this.tbAccountant);
             this.panel2.Controls.Add(this.lblTempoTotal);
             this.panel2.Controls.Add(this.button8);
             this.panel2.Controls.Add(this.button7);
-            this.panel2.Controls.Add(this.button6);
+            this.panel2.Controls.Add(this.btnPlay);
             this.panel2.Controls.Add(this.trackBarStateAudio);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 99);
@@ -116,16 +120,16 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel2.Size = new System.Drawing.Size(858, 69);
             this.panel2.TabIndex = 1;
             // 
-            // textBox1
+            // tbAccountant
             // 
-            this.textBox1.BackColor = System.Drawing.Color.BurlyWood;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBox1.Location = new System.Drawing.Point(190, 24);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(48, 19);
-            this.textBox1.TabIndex = 11;
-            this.textBox1.Text = "00:00";
+            this.tbAccountant.BackColor = System.Drawing.Color.BurlyWood;
+            this.tbAccountant.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbAccountant.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tbAccountant.Location = new System.Drawing.Point(183, 23);
+            this.tbAccountant.Name = "tbAccountant";
+            this.tbAccountant.Size = new System.Drawing.Size(73, 19);
+            this.tbAccountant.TabIndex = 11;
+            this.tbAccountant.Text = "00:00:00";
             // 
             // lblTempoTotal
             // 
@@ -134,9 +138,9 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.lblTempoTotal.ForeColor = System.Drawing.Color.Black;
             this.lblTempoTotal.Location = new System.Drawing.Point(730, 23);
             this.lblTempoTotal.Name = "lblTempoTotal";
-            this.lblTempoTotal.Size = new System.Drawing.Size(47, 16);
+            this.lblTempoTotal.Size = new System.Drawing.Size(71, 16);
             this.lblTempoTotal.TabIndex = 10;
-            this.lblTempoTotal.Text = "00:00";
+            this.lblTempoTotal.Text = "00:00:00";
             // 
             // button8
             // 
@@ -160,24 +164,28 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.button7.TabIndex = 8;
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btnPlay
             // 
-            this.button6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button6.BackgroundImage")));
-            this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Location = new System.Drawing.Point(77, 10);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(53, 45);
-            this.button6.TabIndex = 7;
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnPlay.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnPlay.BackgroundImage")));
+            this.btnPlay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnPlay.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnPlay.Location = new System.Drawing.Point(77, 10);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(53, 45);
+            this.btnPlay.TabIndex = 7;
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // trackBarStateAudio
             // 
             this.trackBarStateAudio.Location = new System.Drawing.Point(261, 22);
+            this.trackBarStateAudio.Maximum = 580025;
             this.trackBarStateAudio.Name = "trackBarStateAudio";
             this.trackBarStateAudio.Size = new System.Drawing.Size(463, 45);
-            this.trackBarStateAudio.TabIndex = 6;
+            this.trackBarStateAudio.TabIndex = 580020;
             this.trackBarStateAudio.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarStateAudio.Value = 1;
+            this.trackBarStateAudio.ValueChanged += new System.EventHandler(this.trackBarStateAudio_ValueChanged);
             // 
             // panel1
             // 
@@ -295,7 +303,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panelExibicao.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelExibicao.Location = new System.Drawing.Point(0, 168);
             this.panelExibicao.Name = "panelExibicao";
-            this.panelExibicao.Size = new System.Drawing.Size(858, 283);
+            this.panelExibicao.Size = new System.Drawing.Size(858, 401);
             this.panelExibicao.TabIndex = 1;
             // 
             // tabControlBody
@@ -306,7 +314,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.tabControlBody.Location = new System.Drawing.Point(0, 0);
             this.tabControlBody.Name = "tabControlBody";
             this.tabControlBody.SelectedIndex = 0;
-            this.tabControlBody.Size = new System.Drawing.Size(858, 283);
+            this.tabControlBody.Size = new System.Drawing.Size(858, 401);
             this.tabControlBody.TabIndex = 0;
             // 
             // tabPageFile
@@ -316,7 +324,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.tabPageFile.Controls.Add(this.panel3);
             this.tabPageFile.Location = new System.Drawing.Point(4, 24);
             this.tabPageFile.Name = "tabPageFile";
-            this.tabPageFile.Size = new System.Drawing.Size(850, 255);
+            this.tabPageFile.Size = new System.Drawing.Size(850, 373);
             this.tabPageFile.TabIndex = 0;
             this.tabPageFile.Text = "Gerenciar Files In Bucket";
             // 
@@ -333,7 +341,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel4.Controls.Add(this.label4);
             this.panel4.Location = new System.Drawing.Point(439, 9);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(403, 238);
+            this.panel4.Size = new System.Drawing.Size(403, 356);
             this.panel4.TabIndex = 1;
             // 
             // pgbAnalizer
@@ -450,6 +458,10 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.panel3.BackColor = System.Drawing.Color.Tan;
+            this.panel3.Controls.Add(this.cbFilesBucketOutput);
+            this.panel3.Controls.Add(this.lblNameBucketOutput);
+            this.panel3.Controls.Add(this.label15);
+            this.panel3.Controls.Add(this.label11);
             this.panel3.Controls.Add(this.pgbUploadFlie);
             this.panel3.Controls.Add(this.cbFilesBucket);
             this.panel3.Controls.Add(this.label8);
@@ -462,8 +474,46 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel3.Controls.Add(this.label5);
             this.panel3.Location = new System.Drawing.Point(3, 9);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(430, 238);
+            this.panel3.Size = new System.Drawing.Size(430, 356);
             this.panel3.TabIndex = 0;
+            // 
+            // cbFilesBucketOutput
+            // 
+            this.cbFilesBucketOutput.BackColor = System.Drawing.Color.NavajoWhite;
+            this.cbFilesBucketOutput.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbFilesBucketOutput.FormattingEnabled = true;
+            this.cbFilesBucketOutput.Location = new System.Drawing.Point(26, 317);
+            this.cbFilesBucketOutput.Name = "cbFilesBucketOutput";
+            this.cbFilesBucketOutput.Size = new System.Drawing.Size(381, 23);
+            this.cbFilesBucketOutput.TabIndex = 20;
+            // 
+            // lblNameBucketOutput
+            // 
+            this.lblNameBucketOutput.AutoSize = true;
+            this.lblNameBucketOutput.Location = new System.Drawing.Point(38, 290);
+            this.lblNameBucketOutput.Name = "lblNameBucketOutput";
+            this.lblNameBucketOutput.Size = new System.Drawing.Size(90, 15);
+            this.lblNameBucketOutput.TabIndex = 19;
+            this.lblNameBucketOutput.Text = "Bucket de Saida";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label15.Location = new System.Drawing.Point(13, 263);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(177, 19);
+            this.label15.TabIndex = 18;
+            this.label15.Text = "Transcrições no Bucket";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(122, 237);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(212, 15);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "----------------- OU--------------------";
             // 
             // pgbUploadFlie
             // 
@@ -481,7 +531,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.cbFilesBucket.FormattingEnabled = true;
             this.cbFilesBucket.Location = new System.Drawing.Point(26, 196);
             this.cbFilesBucket.Name = "cbFilesBucket";
-            this.cbFilesBucket.Size = new System.Drawing.Size(308, 23);
+            this.cbFilesBucket.Size = new System.Drawing.Size(381, 23);
             this.cbFilesBucket.TabIndex = 15;
             this.cbFilesBucket.SelectedValueChanged += new System.EventHandler(this.cbFilesBucket_SelectedValueChanged);
             // 
@@ -560,7 +610,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.tabPageAudio.Location = new System.Drawing.Point(4, 24);
             this.tabPageAudio.Name = "tabPageAudio";
             this.tabPageAudio.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAudio.Size = new System.Drawing.Size(850, 255);
+            this.tabPageAudio.Size = new System.Drawing.Size(850, 373);
             this.tabPageAudio.TabIndex = 1;
             this.tabPageAudio.Text = "View Transcription";
             // 
@@ -605,7 +655,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 451);
+            this.ClientSize = new System.Drawing.Size(858, 569);
             this.Controls.Add(this.panelExibicao);
             this.Controls.Add(this.panelMenu);
             this.Name = "Form1";
@@ -637,11 +687,11 @@ namespace Amazon_Transcribe_Speech_To_Text
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tbAccountant;
         private System.Windows.Forms.Label lblTempoTotal;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.TrackBar trackBarStateAudio;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
@@ -682,6 +732,10 @@ namespace Amazon_Transcribe_Speech_To_Text
         private System.Windows.Forms.Label lblFormatMidia;
         private System.Windows.Forms.Label b;
         private System.Windows.Forms.ProgressBar pgbAnalizer;
+        private System.Windows.Forms.ComboBox cbFilesBucketOutput;
+        private System.Windows.Forms.Label lblNameBucketOutput;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label11;
     }
 }
 
