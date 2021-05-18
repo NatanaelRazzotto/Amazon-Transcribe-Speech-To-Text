@@ -99,9 +99,6 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
 
         public void ViewStatusofTranscriptJob(TranscriptionJob transcriptionJob, int incrementProgrees)
         {
-            string nameJob = transcriptionJob.TranscriptionJobName;
-            TranscriptionJobStatus status = transcriptionJob.TranscriptionJobStatus;
-            string formatMidia = transcriptionJob.MediaFormat;
             formTranscribe.setJobProperties(transcriptionJob, incrementProgrees);
         }
 

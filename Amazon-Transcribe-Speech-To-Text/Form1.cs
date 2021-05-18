@@ -1,4 +1,5 @@
 ﻿using Amazon.TranscribeService;
+using Amazon.TranscribeService.Model;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Models;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity;
@@ -164,11 +165,14 @@ namespace Amazon_Transcribe_Speech_To_Text
 
         public void setJobProperties(TranscriptionJob transcriptionJob, int incrementProgrees)
         {
-            lblNameJob.Text = nameJob;
-            lblStatusJob.Text = status.ToString();
-            lblFormatMidia.Text = formatMidia.ToString();
-            pgbAnalizer.Value = incrementProgrees ;
-
+            pgbAnalizer.Value = incrementProgrees;
+            lblNameJob.Text = transcriptionJob.TranscriptionJobName;
+            lblStatusJob.Text = transcriptionJob.TranscriptionJobStatus;
+            MediaFormat formatMidia = transcriptionJob.MediaFormat;
+            if (formatMidia == MediaFormat.Mp3)
+            {
+                lblFormatMidia.Text = "Mp3";
+            }         
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -218,7 +222,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             }
         }
 
-        public void bindTextContent(List<Transcript> contentText)
+        public void bindTextContent(List<Helpers.Models.Entity.Transcript> contentText)
         {
             richTextBox1.Text = contentText.ElementAt(0).transcript;
         }
