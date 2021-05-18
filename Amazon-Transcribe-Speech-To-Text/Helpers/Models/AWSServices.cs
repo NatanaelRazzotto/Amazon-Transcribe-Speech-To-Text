@@ -50,6 +50,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
 
         public AWSServices(IController controller) {
             bucketNameInput = "unibrasil-transcriberazz-input";
+            JobName = "Transcribe-Reuniao-20210917100919.json";
             this.controller = controller;
         }
 
@@ -179,7 +180,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                     GetObjectRequest getObjectRequest = new GetObjectRequest()
                     {
                         BucketName = bucketNameOutput,
-                        Key = "Transcribe-Reuniao-20210917100919.json" //JobName
+                        Key = JobName
                     };
                     using (GetObjectResponse getObjectResponse = await s3Client.GetObjectAsync(getObjectRequest))
                     {
@@ -207,6 +208,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
         }
         public async Task<StartTranscriptionJobResponse> ExecuteTranscribe(AmazonTranscribeServiceClient TranscribeClient, string fileName, string selectedBucketName)
         {
+
             StartTranscriptionJobRequest JobRequest = new StartTranscriptionJobRequest
             {
                 Media = new Media { MediaFileUri = $"s3://{bucketNameInput}/{fileName}" },

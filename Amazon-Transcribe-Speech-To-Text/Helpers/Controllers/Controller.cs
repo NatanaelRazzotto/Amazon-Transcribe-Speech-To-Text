@@ -56,7 +56,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         public void displayParametersInitials(TimeSpan totalTime, List<Entity.Transcript> contentText)
         {
             formTranscribe.displayTotalTime(totalTime);
-            formTranscribe.bindTextContent(contentText);
+            formTranscribe.bindTextContent(contentText);//
         }
 
         public async Task displayParametersCurrents(TimeSpan currentAudio, Item item) {
@@ -102,7 +102,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             string nameJob = transcriptionJob.TranscriptionJobName;
             TranscriptionJobStatus status = transcriptionJob.TranscriptionJobStatus;
             string formatMidia = transcriptionJob.MediaFormat;
-            formTranscribe.setJobProperties(nameJob, status, formatMidia, incrementProgrees);
+            formTranscribe.setJobProperties(transcriptionJob, incrementProgrees);
         }
 
         public void TranscribeObject()
@@ -120,9 +120,40 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         public void definedPositionAudioMilisseconds(double timeSelect)
         {
             //double newTimeSelect = Convert.ToDouble(timeSelect);
-            playerMedia.defineNewCurrentTimeMilisseconds(timeSelect);
+            speechToText.defineNewCurrentTimeMilisseconds(timeSelect);
         }
-       
+
+        internal void setModifyContent(double valueStart, double valueEnd, string content)
+        {
+            Item itemNew = speechToText.addContentItem(valueStart, valueEnd, content);
+            if (itemNew != null)
+            {
+                if (itemNew.alternatives.Count != 0)
+                {
+                    formTranscribe.displayTrancribe(itemNew);
+                }
+            }
+        }
+
+        public void setRemoveContentSelect(double valueStart, double valueEnd, int indexSelect)
+        {
+            Item item = speechToText.removeContentItem(valueStart, valueEnd, indexSelect);
+            if (item != null)
+            {
+                if (item.alternatives.Count != 0)
+                {
+                    formTranscribe.displayTrancribe(item);
+                }
+            }
+
+        }
+
+        public void genarateNewContent() {
+            speechToText.regenerate();
+            //formTranscribe.bindTextContent(contentText);//
+        }
+
+
         #endregion
     }
 }

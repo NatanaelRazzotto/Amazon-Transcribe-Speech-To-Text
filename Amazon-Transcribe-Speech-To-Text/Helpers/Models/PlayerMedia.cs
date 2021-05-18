@@ -26,11 +26,15 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
 
         public void clickPaused() {
             outputDevice.Pause();
-            executeMedia = (executeMedia == false) ? true : false;
+            executeMedia = checkPlayPause();
         }
         public void clickPlay() {
             outputDevice.Play();
-            executeMedia = (executeMedia == false) ? true : false;
+            executeMedia = checkPlayPause();
+        }
+        public bool checkPlayPause()
+        { 
+            return (executeMedia == false) ? true : false;
         }
 
         public async Task newFileAudio()
@@ -63,12 +67,6 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
                 decimal position = ((decimal)currentPosition / (decimal)audioFile.Length)*100;
             }          
         
-        }
-
-        public void defineNewCurrentTimeMilisseconds(double time)
-        {
-            TimeSpan newTime = TimeSpan.FromMilliseconds(time);
-            trackAudioPlay(newTime);
         }
 
         public void trackAudioPlay(TimeSpan time) {

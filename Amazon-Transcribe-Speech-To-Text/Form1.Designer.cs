@@ -78,12 +78,17 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.lblNameBucketInput = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPageAudio = new System.Windows.Forms.TabPage();
+            this.btnReGerar = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.lblNumItem = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.btnAddContent = new System.Windows.Forms.Button();
             this.txtContent = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cbAlternative = new System.Windows.Forms.ComboBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
@@ -213,6 +218,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.trackBarStateAudio.TabIndex = 580020;
             this.trackBarStateAudio.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBarStateAudio.Value = 1;
+            this.trackBarStateAudio.Scroll += new System.EventHandler(this.trackBarStateAudio_Scroll);
             this.trackBarStateAudio.ValueChanged += new System.EventHandler(this.trackBarStateAudio_ValueChanged);
             // 
             // panel1
@@ -635,6 +641,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             // tabPageAudio
             // 
             this.tabPageAudio.BackColor = System.Drawing.Color.BurlyWood;
+            this.tabPageAudio.Controls.Add(this.btnReGerar);
             this.tabPageAudio.Controls.Add(this.panel6);
             this.tabPageAudio.Controls.Add(this.label18);
             this.tabPageAudio.Location = new System.Drawing.Point(4, 24);
@@ -643,6 +650,17 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.tabPageAudio.Size = new System.Drawing.Size(850, 373);
             this.tabPageAudio.TabIndex = 1;
             this.tabPageAudio.Text = "View Transcription";
+            // 
+            // btnReGerar
+            // 
+            this.btnReGerar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReGerar.Location = new System.Drawing.Point(698, 6);
+            this.btnReGerar.Name = "btnReGerar";
+            this.btnReGerar.Size = new System.Drawing.Size(69, 23);
+            this.btnReGerar.TabIndex = 37;
+            this.btnReGerar.Text = "Re-Gerar";
+            this.btnReGerar.UseVisualStyleBackColor = true;
+            this.btnReGerar.Click += new System.EventHandler(this.btnReGerar_Click);
             // 
             // panel6
             // 
@@ -680,8 +698,12 @@ namespace Amazon_Transcribe_Speech_To_Text
             // panel9
             // 
             this.panel9.BackColor = System.Drawing.Color.BurlyWood;
+            this.panel9.Controls.Add(this.btnRemove);
+            this.panel9.Controls.Add(this.lblNumItem);
+            this.panel9.Controls.Add(this.label27);
+            this.panel9.Controls.Add(this.btnAddContent);
             this.panel9.Controls.Add(this.txtContent);
-            this.panel9.Controls.Add(this.comboBox1);
+            this.panel9.Controls.Add(this.cbAlternative);
             this.panel9.Controls.Add(this.label25);
             this.panel9.Controls.Add(this.label23);
             this.panel9.Controls.Add(this.label20);
@@ -690,26 +712,70 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel9.Size = new System.Drawing.Size(391, 133);
             this.panel9.TabIndex = 23;
             // 
+            // btnRemove
+            // 
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnRemove.Location = new System.Drawing.Point(310, 90);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(69, 23);
+            this.btnRemove.TabIndex = 36;
+            this.btnRemove.Text = "Remove";
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // lblNumItem
+            // 
+            this.lblNumItem.AutoSize = true;
+            this.lblNumItem.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblNumItem.Location = new System.Drawing.Point(200, 9);
+            this.lblNumItem.Name = "lblNumItem";
+            this.lblNumItem.Size = new System.Drawing.Size(18, 19);
+            this.lblNumItem.TabIndex = 24;
+            this.lblNumItem.Text = "0";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(111, 13);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(93, 15);
+            this.label27.TabIndex = 35;
+            this.label27.Text = "Elemento de Nº ";
+            // 
+            // btnAddContent
+            // 
+            this.btnAddContent.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAddContent.BackgroundImage")));
+            this.btnAddContent.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnAddContent.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAddContent.Location = new System.Drawing.Point(340, 56);
+            this.btnAddContent.Name = "btnAddContent";
+            this.btnAddContent.Size = new System.Drawing.Size(27, 28);
+            this.btnAddContent.TabIndex = 34;
+            this.btnAddContent.UseVisualStyleBackColor = true;
+            this.btnAddContent.Click += new System.EventHandler(this.btnAddContent_Click);
+            // 
             // txtContent
             // 
             this.txtContent.BackColor = System.Drawing.Color.BurlyWood;
             this.txtContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtContent.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtContent.Location = new System.Drawing.Point(53, 56);
+            this.txtContent.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtContent.Location = new System.Drawing.Point(26, 56);
             this.txtContent.Name = "txtContent";
-            this.txtContent.Size = new System.Drawing.Size(304, 19);
+            this.txtContent.Size = new System.Drawing.Size(136, 19);
             this.txtContent.TabIndex = 33;
             this.txtContent.Text = "Transcrição de Audio";
             // 
-            // comboBox1
+            // cbAlternative
             // 
-            this.comboBox1.BackColor = System.Drawing.Color.NavajoWhite;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(121, 90);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(253, 23);
-            this.comboBox1.TabIndex = 17;
+            this.cbAlternative.BackColor = System.Drawing.Color.NavajoWhite;
+            this.cbAlternative.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cbAlternative.FormattingEnabled = true;
+            this.cbAlternative.Location = new System.Drawing.Point(121, 90);
+            this.cbAlternative.Name = "cbAlternative";
+            this.cbAlternative.Size = new System.Drawing.Size(183, 23);
+            this.cbAlternative.TabIndex = 17;
+            this.cbAlternative.SelectedIndexChanged += new System.EventHandler(this.cbAlternative_SelectedIndexChanged);
+            this.cbAlternative.SelectedValueChanged += new System.EventHandler(this.cbAlternative_SelectedValueChanged);
             // 
             // label25
             // 
@@ -724,7 +790,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(183, 38);
+            this.label23.Location = new System.Drawing.Point(26, 38);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(35, 15);
             this.label23.TabIndex = 30;
@@ -734,7 +800,7 @@ namespace Amazon_Transcribe_Speech_To_Text
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label20.Location = new System.Drawing.Point(161, 9);
+            this.label20.Location = new System.Drawing.Point(25, 9);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(90, 19);
             this.label20.TabIndex = 29;
@@ -1035,8 +1101,13 @@ namespace Amazon_Transcribe_Speech_To_Text
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TextBox txtContent;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cbAlternative;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button btnAddContent;
+        private System.Windows.Forms.Label lblNumItem;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.Button btnReGerar;
     }
 }
 

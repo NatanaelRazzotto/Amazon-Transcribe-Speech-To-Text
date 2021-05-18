@@ -27,11 +27,23 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             string jsonString = await awsServices.getObjectTranscribeS3();
             if (!String.IsNullOrEmpty(jsonString))
             {
-                this.transcribed = JsonConvert.DeserializeObject<Transcribed>(jsonString);
+                transcribed = JsonConvert.DeserializeObject<Transcribed>(jsonString);
                 await playerMedia.newFileAudio();
                 TimeSpan TotalTime = playerMedia.getTotalTimeAudio();
-                List<Transcript> contentText = transcribed.results.transcripts;
-                Controller.displayParametersInitials(TotalTime, contentText);
+                ResultsTranscribed results = transcribed.results;
+                setAverageConfidenceItem(results.items);
+                Controller.displayParametersInitials(TotalTime, results.transcripts);
+            }
+        }
+        public void setAverageConfidenceItem(List<Item> items) {
+            foreach (Item itemElement in items)
+            {
+                float confidences = 0;
+                foreach (Alternatives itemAlternative in itemElement.alternatives)
+                {
+                    confidences += itemAlternative.confidence;
+                }
+                itemElement.averageConfidence = (confidences / itemElement.alternatives.Count);
             }
         }
 
@@ -47,6 +59,11 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             }
 
             await trackAudio();
+        }
+        public void defineNewCurrentTimeMilisseconds(double time)
+        {
+            TimeSpan newTime = TimeSpan.FromMilliseconds(time);
+            playerMedia.trackAudioPlay(newTime);
         }
 
         public async Task trackAudio()
@@ -67,36 +84,102 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
                 {
                     await Task.Delay(2000);
                 }
-                else if (statePlayback == PlaybackState.Stopped)
-                {
-
-                }
             }
 
         }
         public Item getTextFromSpeach(TimeSpan timeCurrent) {
             List<Item> items = transcribed.results.items;
             Item itemSelect = items.Find(x => (x.start_time <= timeCurrent.TotalSeconds) && (x.end_time >= timeCurrent.TotalSeconds));
-
             return itemSelect;
 
-            //foreach (Item item in items)
-            //{
-            //    double star_Time = item.start_time;
-            //    double end_Time = item.end_time;
-            //    double time_Current = timeCurrent.TotalSeconds;//timeCurrent.TotalMinutes;
-            //    if ((time_Current >= star_Time) && (time_Current <= end_Time))
-            //    {
-            //        int a = 10;
-            //    }
-            //}
-
-            //var lis = items.Select(x =>x.start_time >= timeCurrent.TotalMinutes)
+        }
+        public void regenerate()
+        {
+            List<Item> items = transcribed.results.items;
+            string content = "";
+            foreach (Item item in items)
+            {               
+                if (item.alternatives.Count > 0)
+                {
+                    Alternatives alternative;
+                    alternative = item.alternatives.Find(x => x.changed.Equals(true));
+                    if (alternative == null)
+                    {
+                        alternative = searchMaxConfidence(item);
+                    }
+                    content = $"{content} {alternative.content}";
+                }
+                else
+                {
+                    content = content + item.alternatives.ElementAt(0).content;
+                }
+            }
+            Transcript transcript = new Transcript();
+            transcript.transcript = content;
+            transcribed.results.transcripts.Clear();
+            transcribed.results.transcripts.Add(transcript);
+        }
+        public Alternatives searchMaxConfidence(Item item) {
+            float confidences = 0;
+            //int index = -1;
+            Alternatives alternative = null;
+            for (int a = 0; a < item.alternatives.Count; a++)
+            {
+                if (item.alternatives.ElementAt(a).confidence > confidences)
+                {
+                    alternative = item.alternatives.ElementAt(a);
+                    confidences = alternative.confidence;
+                }
+            }
+            if (alternative == null)
+            {
+                alternative = item.alternatives.ElementAt(0);
+            }
+            return alternative;
         }
 
+        public Item addContentItem(double valueStart, double valueEnd, string content)
+        {
+            List<Item> items = transcribed.results.items;
+            Item itemSelect = items.Find(x => (x.start_time == valueStart) && (x.end_time == valueEnd));
+            if (!itemSelect.Equals(null))
+            {
+                // bool checkAlternative = itemSelect.alternatives.Any(x => x.content.Equals(content));
+                Alternatives checkAlternative = itemSelect.alternatives.Find(x => x.changed.Equals(true));
+                if (checkAlternative == null)
+                {
+                    Alternatives alternative = new Alternatives
+                    {
+                        confidence = 1,
+                        content = content,
+                        changed = true
+                    };
+                    itemSelect.alternatives.Insert(0, alternative);
+                }
+                else
+                {
+                    checkAlternative.content = content;
+                }             
 
+            }
+            
+            return itemSelect;
+        }
 
-
-
+        public Item removeContentItem(double valueStart, double valueEnd, int indexSelect)
+        {
+            List<Item> items = transcribed.results.items;
+            Item itemSelect = items.Find(x => (x.start_time == valueStart) && (x.end_time == valueEnd));
+            if ((indexSelect > 0) && (indexSelect < itemSelect.alternatives.Count))
+            {
+                itemSelect.alternatives.RemoveAt(indexSelect);
+                return itemSelect;
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
     }
 }

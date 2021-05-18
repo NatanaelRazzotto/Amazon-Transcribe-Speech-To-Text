@@ -162,11 +162,11 @@ namespace Amazon_Transcribe_Speech_To_Text
             tabControlBody.SelectedIndex = 1;
         }
 
-        public void setJobProperties(string nameJob, TranscriptionJobStatus status, string formatMidia, int incrementProgrees)
+        public void setJobProperties(TranscriptionJob transcriptionJob, int incrementProgrees)
         {
             lblNameJob.Text = nameJob;
             lblStatusJob.Text = status.ToString();
-            //lblFormatMidia.Text = formatMidia.ToString();
+            lblFormatMidia.Text = formatMidia.ToString();
             pgbAnalizer.Value = incrementProgrees ;
 
         }
@@ -229,7 +229,17 @@ namespace Amazon_Transcribe_Speech_To_Text
             {
                 lblStart.Text = item.start_time.ToString();
                 lblEnd.Text = item.end_time.ToString();
-                lblConfidence.Text = item.alternatives.ElementAt(0).confidence.ToString();
+                if (item.alternatives.Count != 0)
+                {
+                    cbAlternative.Items.Clear();
+                    foreach (Alternatives alternative in item.alternatives)
+                    {
+                        cbAlternative.Items.Add($"{alternative.content} - Confidence: {alternative.confidence.ToString("F")}%");
+                    }
+                    cbAlternative.SelectedIndex = 0;
+                    //txtContent.Text = item.alternatives.ElementAt(0).content;
+                }
+                lblConfidence.Text = $"{item.averageConfidence}%";
                 lblType.Text = item.type;
             }
         }
@@ -250,6 +260,44 @@ namespace Amazon_Transcribe_Speech_To_Text
                     trackBarStateAudio.Value = trackBarStateAudio.Maximum;
                 }
             }
+        }
+
+        private void cbAlternative_SelectedValueChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void cbAlternative_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+           
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            double valueStart = Convert.ToDouble(lblStart.Text);
+            double valueEnd = Convert.ToDouble(lblEnd.Text);
+            int indexSelect = cbAlternative.SelectedIndex;
+            controller.setRemoveContentSelect(valueStart, valueEnd, indexSelect);
+
+        }
+
+        private void btnAddContent_Click(object sender, EventArgs e)
+        {
+            double valueStart = Convert.ToDouble(lblStart.Text);
+            double valueEnd = Convert.ToDouble(lblEnd.Text);
+            string content = txtContent.Text;
+            controller.setModifyContent(valueStart, valueEnd, content);
+        }
+
+        private void btnReGerar_Click(object sender, EventArgs e)
+        {
+            controller.genarateNewContent();
+        }
+
+        private void trackBarStateAudio_Scroll(object sender, EventArgs e)
+        {
+            double timeSelect = trackBarStateAudio.Value;
+            controller.definedPositionAudioMilisseconds(timeSelect);
         }
     }
 }
