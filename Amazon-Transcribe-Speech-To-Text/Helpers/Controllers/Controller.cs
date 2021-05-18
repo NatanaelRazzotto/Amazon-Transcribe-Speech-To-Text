@@ -19,6 +19,8 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         private IViewTranscribe formTranscribe;
         private AWSServices awsServices;
         private PlayerMedia playerMedia;
+        private SpeechToText speechToText;
+        ///private Transcribed transcribed;
         public Controller(IViewTranscribe formTranscribe)
         {
             this.formTranscribe = formTranscribe;
@@ -50,6 +52,19 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
                 }
             }
         }
+
+        public void displayParametersInitials(TimeSpan totalTime, List<Entity.Transcript> contentText)
+        {
+            formTranscribe.displayTotalTime(totalTime);
+            formTranscribe.bindTextContent(contentText);
+        }
+
+        public async Task displayParametersCurrents(TimeSpan currentAudio, Item item) {
+            formTranscribe.displayStatusCurrentProgress(currentAudio);
+            formTranscribe.displayTrancribe(item);
+        }
+
+
         public bool setFromNameBuckets(string bucketInput, string bucketOutput)
         {
             awsServices.setBucktes(bucketInput, bucketOutput);
@@ -90,58 +105,24 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             formTranscribe.setJobProperties(nameJob, status, formatMidia, incrementProgrees);
         }
 
-        public async void TranscribeObject()
+        public void TranscribeObject()
         {
-            string jsonString = await awsServices.getObjectTranscribeS3();
-            Transcribed transcribed = Newtonsoft.Json.JsonConvert.DeserializeObject<Transcribed>(jsonString);
+            speechToText = new SpeechToText(this, awsServices);
+
         }
 
         #region controlesAudio
         public async void setPlayMedia()
         {
-            if (!playerMedia.checkExecute())
-            {
-                await playerMedia.clickPlay();
-            }
-            else
-            {
-                playerMedia.clickPaused();
-            }
-            
-            await trackAudio();
+            //speechToText = new SpeechToText(this, awsServices);//
+            speechToText.controlExecutePlayer();
         }
         public void definedPositionAudioMilisseconds(double timeSelect)
         {
             //double newTimeSelect = Convert.ToDouble(timeSelect);
             playerMedia.defineNewCurrentTimeMilisseconds(timeSelect);
         }
-        public async Task trackAudio()
-        {
-            bool playMedia = true;
-            PlaybackState statePlayback = playerMedia.getPlaybackState();
-
-            while (playMedia)
-            {
-                if (statePlayback == PlaybackState.Playing)
-                {
-                    await Task.Delay(1000);
-                    TimeSpan currentAudio = playerMedia.getCurrentTime();
-                    TimeSpan TotalTime = playerMedia.getTotalTimeAudio();                    
-                    //int currentMilliseconds = (int)currentAudio.TotalMilliseconds;
-                    
-                    formTranscribe.displayStatusCurrentProgress(TotalTime, currentAudio);
-                }
-                else if (statePlayback == PlaybackState.Paused)
-                {
-                    await Task.Delay(2000);
-                }
-                else if (statePlayback == PlaybackState.Stopped)
-                {
-
-                }
-            }
-
-        }
+       
         #endregion
     }
 }

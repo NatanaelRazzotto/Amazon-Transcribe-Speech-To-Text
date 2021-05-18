@@ -9,6 +9,6 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
     public class ResultsTranscribed
     {
         public List<Transcript> transcripts { get; set; }
-        public List<Items> items { get; set; }
+        public List<Item> items { get; set; }
     }
 }

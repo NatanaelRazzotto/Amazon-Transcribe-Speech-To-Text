@@ -28,8 +28,12 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             outputDevice.Pause();
             executeMedia = (executeMedia == false) ? true : false;
         }
+        public void clickPlay() {
+            outputDevice.Play();
+            executeMedia = (executeMedia == false) ? true : false;
+        }
 
-        public async Task clickPlay()
+        public async Task newFileAudio()
         {
             if (outputDevice == null)
             {
@@ -39,13 +43,8 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             if (mp3Reader == null)
             {
                 mp3Reader = new Mp3FileReader(@"D:\UserFiles\Musicas\Audios\rosalina_batista_entrevista.mp3");
-                //audioFile = new AudioFileReader(@"D:\UserFiles\Musicas\Audios\rosalina_batista_entrevista.mp3");
-                //outputDevice.Init(audioFile);
                 outputDevice.Init(mp3Reader);
             }
-            outputDevice.Play();
-            executeMedia = (executeMedia == false) ? true : false;
-            //await trackAudio();
 
         }
 

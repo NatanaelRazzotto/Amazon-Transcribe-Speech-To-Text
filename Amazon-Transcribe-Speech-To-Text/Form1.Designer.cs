@@ -78,10 +78,33 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.lblNameBucketInput = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPageAudio = new System.Windows.Forms.TabPage();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.txtContent = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.lblType = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.lblConfidence = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.lblEnd = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.lblStart = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.ofdSearchFiles = new System.Windows.Forms.OpenFileDialog();
+            this.label16 = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarStateAudio)).BeginInit();
@@ -92,6 +115,11 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tabPageAudio.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -607,12 +635,242 @@ namespace Amazon_Transcribe_Speech_To_Text
             // tabPageAudio
             // 
             this.tabPageAudio.BackColor = System.Drawing.Color.BurlyWood;
+            this.tabPageAudio.Controls.Add(this.panel6);
+            this.tabPageAudio.Controls.Add(this.label18);
             this.tabPageAudio.Location = new System.Drawing.Point(4, 24);
             this.tabPageAudio.Name = "tabPageAudio";
             this.tabPageAudio.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageAudio.Size = new System.Drawing.Size(850, 373);
             this.tabPageAudio.TabIndex = 1;
             this.tabPageAudio.Text = "View Transcription";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.Tan;
+            this.panel6.Controls.Add(this.label21);
+            this.panel6.Controls.Add(this.richTextBox1);
+            this.panel6.Controls.Add(this.panel9);
+            this.panel6.Controls.Add(this.panel8);
+            this.panel6.Controls.Add(this.panel7);
+            this.panel6.Location = new System.Drawing.Point(8, 35);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(834, 330);
+            this.panel6.TabIndex = 0;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label21.Location = new System.Drawing.Point(18, 151);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(185, 19);
+            this.label21.TabIndex = 34;
+            this.label21.Text = "TRANCRIÇÃO COMPLETA";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BackColor = System.Drawing.Color.BurlyWood;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(15, 179);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(804, 140);
+            this.richTextBox1.TabIndex = 24;
+            this.richTextBox1.Text = "";
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.BurlyWood;
+            this.panel9.Controls.Add(this.txtContent);
+            this.panel9.Controls.Add(this.comboBox1);
+            this.panel9.Controls.Add(this.label25);
+            this.panel9.Controls.Add(this.label23);
+            this.panel9.Controls.Add(this.label20);
+            this.panel9.Location = new System.Drawing.Point(267, 12);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(391, 133);
+            this.panel9.TabIndex = 23;
+            // 
+            // txtContent
+            // 
+            this.txtContent.BackColor = System.Drawing.Color.BurlyWood;
+            this.txtContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtContent.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtContent.Location = new System.Drawing.Point(53, 56);
+            this.txtContent.Name = "txtContent";
+            this.txtContent.Size = new System.Drawing.Size(304, 19);
+            this.txtContent.TabIndex = 33;
+            this.txtContent.Text = "Transcrição de Audio";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.BackColor = System.Drawing.Color.NavajoWhite;
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(121, 90);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(253, 23);
+            this.comboBox1.TabIndex = 17;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label25.Location = new System.Drawing.Point(26, 90);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(89, 19);
+            this.label25.TabIndex = 32;
+            this.label25.Text = "Alternativa";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(183, 38);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(35, 15);
+            this.label23.TabIndex = 30;
+            this.label23.Text = "Texto";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label20.Location = new System.Drawing.Point(161, 9);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(90, 19);
+            this.label20.TabIndex = 29;
+            this.label20.Text = "CONTEÚDO";
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.BurlyWood;
+            this.panel8.Controls.Add(this.lblType);
+            this.panel8.Controls.Add(this.label26);
+            this.panel8.Controls.Add(this.lblConfidence);
+            this.panel8.Controls.Add(this.label24);
+            this.panel8.Controls.Add(this.label12);
+            this.panel8.Location = new System.Drawing.Point(664, 12);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(155, 133);
+            this.panel8.TabIndex = 22;
+            // 
+            // lblType
+            // 
+            this.lblType.AutoSize = true;
+            this.lblType.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblType.Location = new System.Drawing.Point(43, 97);
+            this.lblType.Name = "lblType";
+            this.lblType.Size = new System.Drawing.Size(81, 19);
+            this.lblType.TabIndex = 28;
+            this.lblType.Text = "..................";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(65, 82);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(30, 15);
+            this.label26.TabIndex = 27;
+            this.label26.Text = "Tipo";
+            // 
+            // lblConfidence
+            // 
+            this.lblConfidence.AutoSize = true;
+            this.lblConfidence.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblConfidence.Location = new System.Drawing.Point(43, 56);
+            this.lblConfidence.Name = "lblConfidence";
+            this.lblConfidence.Size = new System.Drawing.Size(78, 19);
+            this.lblConfidence.TabIndex = 26;
+            this.lblConfidence.Text = "00.0000%";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(44, 41);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(68, 15);
+            this.label24.TabIndex = 25;
+            this.label24.Text = "Confidence";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label12.Location = new System.Drawing.Point(8, 9);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(141, 19);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "CARACTERISTICAS";
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.BurlyWood;
+            this.panel7.Controls.Add(this.lblEnd);
+            this.panel7.Controls.Add(this.label22);
+            this.panel7.Controls.Add(this.lblStart);
+            this.panel7.Controls.Add(this.label19);
+            this.panel7.Controls.Add(this.label17);
+            this.panel7.Location = new System.Drawing.Point(15, 12);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(246, 133);
+            this.panel7.TabIndex = 21;
+            // 
+            // lblEnd
+            // 
+            this.lblEnd.AutoSize = true;
+            this.lblEnd.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblEnd.Location = new System.Drawing.Point(89, 97);
+            this.lblEnd.Name = "lblEnd";
+            this.lblEnd.Size = new System.Drawing.Size(71, 19);
+            this.lblEnd.TabIndex = 23;
+            this.lblEnd.Text = "00:00:00";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(84, 82);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(71, 15);
+            this.label22.TabIndex = 22;
+            this.label22.Text = "Tempo Final";
+            // 
+            // lblStart
+            // 
+            this.lblStart.AutoSize = true;
+            this.lblStart.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblStart.Location = new System.Drawing.Point(97, 56);
+            this.lblStart.Name = "lblStart";
+            this.lblStart.Size = new System.Drawing.Size(49, 19);
+            this.lblStart.TabIndex = 21;
+            this.lblStart.Text = "00.00\r\n";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label19.Location = new System.Drawing.Point(40, 9);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(169, 19);
+            this.label19.TabIndex = 20;
+            this.label19.Text = "INTERVALO DE TEMPO";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(83, 41);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(77, 15);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "Tempo Inicial";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label18.Location = new System.Drawing.Point(355, 8);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(177, 19);
+            this.label18.TabIndex = 19;
+            this.label18.Text = "TRANCRIÇÃO DE TEXTO\r\n";
             // 
             // button3
             // 
@@ -651,6 +909,15 @@ namespace Amazon_Transcribe_Speech_To_Text
             // 
             this.ofdSearchFiles.FileName = "ofdSearchFiles";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Bahnschrift Condensed", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label16.Location = new System.Drawing.Point(370, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(0, 19);
+            this.label16.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -675,6 +942,16 @@ namespace Amazon_Transcribe_Speech_To_Text
             this.panel5.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.tabPageAudio.ResumeLayout(false);
+            this.tabPageAudio.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -736,6 +1013,30 @@ namespace Amazon_Transcribe_Speech_To_Text
         private System.Windows.Forms.Label lblNameBucketOutput;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label lblStart;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblConfidence;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblType;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label lblEnd;
+        private System.Windows.Forms.Label k;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.TextBox txtContent;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label25;
     }
 }
 

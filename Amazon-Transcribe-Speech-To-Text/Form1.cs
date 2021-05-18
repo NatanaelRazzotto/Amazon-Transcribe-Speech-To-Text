@@ -1,6 +1,7 @@
 ﻿using Amazon.TranscribeService;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Interface;
 using Amazon_Transcribe_Speech_To_Text.Helpers.Models;
+using Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,8 @@ namespace Amazon_Transcribe_Speech_To_Text
         {
             InitializeComponent();
             controller = new Controller(this);
-            //List<string> buckets = controller.getLoadS3ListBuckets();
-            List<string> buckets = null;
+            List<string> buckets = controller.getLoadS3ListBuckets();
+            //List<string> buckets = null;
             if (buckets != null)
             {
                 foreach (string buckte in buckets)
@@ -203,7 +204,52 @@ namespace Amazon_Transcribe_Speech_To_Text
         private void trackBarStateAudio_ValueChanged(object sender, EventArgs e)
         {
             double timeSelect = trackBarStateAudio.Value;
-            controller.definedPositionAudioMilisseconds(timeSelect);
+            //controller.definedPositionAudioMilisseconds(timeSelect);
+        }
+
+        public void displayTotalTime(TimeSpan totalTime)
+        {
+            if (lblTempoTotal.Text == "00:00:00")
+            {
+                lblTempoTotal.Text = $"{totalTime.Hours}:{totalTime.Minutes}:{totalTime.Seconds}";
+                int currentMilliseconds = (int)totalTime.TotalMilliseconds;
+                trackBarStateAudio.Maximum = (int)currentMilliseconds;
+                trackBarStateAudio.Minimum = 0;
+            }
+        }
+
+        public void bindTextContent(List<Transcript> contentText)
+        {
+            richTextBox1.Text = contentText.ElementAt(0).transcript;
+        }
+
+        public async void displayTrancribe(Item item)
+        {
+            if (item != null)
+            {
+                lblStart.Text = item.start_time.ToString();
+                lblEnd.Text = item.end_time.ToString();
+                lblConfidence.Text = item.alternatives.ElementAt(0).confidence.ToString();
+                lblType.Text = item.type;
+            }
+        }
+
+        public async void displayStatusCurrentProgress(TimeSpan currentAudio)
+        {         
+            if (currentAudio.TotalMilliseconds != 0)
+            {
+                tbAccountant.Text = $"{currentAudio.Hours}:{currentAudio.Minutes}:{currentAudio.Seconds}";
+                int currentMilliseconds = (int)currentAudio.TotalMilliseconds;
+                int value = currentMilliseconds;
+                if (value < trackBarStateAudio.Maximum)
+                {
+                    trackBarStateAudio.Value = value;
+                }
+                else
+                {
+                    trackBarStateAudio.Value = trackBarStateAudio.Maximum;
+                }
+            }
         }
     }
 }

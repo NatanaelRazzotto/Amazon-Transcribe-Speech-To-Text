@@ -179,7 +179,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                     GetObjectRequest getObjectRequest = new GetObjectRequest()
                     {
                         BucketName = bucketNameOutput,
-                        Key = JobName
+                        Key = "Transcribe-Reuniao-20210917100919.json" //JobName
                     };
                     using (GetObjectResponse getObjectResponse = await s3Client.GetObjectAsync(getObjectRequest))
                     {
@@ -213,13 +213,27 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                 OutputBucketName = selectedBucketName,
                 LanguageCode = LanguageCode.PtBR,
                 MediaFormat = MediaFormat.Mp3,
-                TranscriptionJobName = $"Transcribe-Reuniao-{DateTime.Now.ToString("yyyymmddhhmmss")}"
+                Settings = new Settings { MaxAlternatives = 5, ShowAlternatives = true,
+                                          MaxSpeakerLabels = 3, ShowSpeakerLabels = true},
+                TranscriptionJobName = $"Transcribe-MediaFile-{DateTime.Now.ToString("yyyymmddhhmmss")}"
             };
 
             StartTranscriptionJobResponse jobResponse = await TranscribeClient.StartTranscriptionJobAsync(JobRequest);
 
             return jobResponse;
 
+        }
+
+        public async Task getListJobsTranscribe() {
+            CancellationTokenSource cancellation = new CancellationTokenSource();
+            CancellationToken token = cancellation.Token;
+            AmazonTranscribeServiceClient TranscribeClient = new AmazonTranscribeServiceClient(awsCredentials, region);
+
+            ListTranscriptionJobsRequest request = new ListTranscriptionJobsRequest
+            {
+                Status = TranscriptionJobStatus.COMPLETED
+            };
+            ListTranscriptionJobsResponse response = await TranscribeClient.ListTranscriptionJobsAsync(request); // token
         }
 
         public async Task requestExecuteTranscribe(string fileName, string selectedBucketName) 
