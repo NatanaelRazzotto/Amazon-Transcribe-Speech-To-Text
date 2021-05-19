@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         private AudioFileReader audioFile;
         private IController controller;
         private bool executeMedia = false;
+        private string fileNameMedia = @"D:\UserFiles\Musicas\Audios\rosalina_batista_entrevista.mp3";
 
         public PlayerMedia(IController controller) {
             this.controller = controller;
@@ -37,7 +39,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             return (executeMedia == false) ? true : false;
         }
 
-        public async Task newFileAudio()
+        public async Task newFileAudio(string fileName)
         {
             if (outputDevice == null)
             {
@@ -46,9 +48,17 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             }
             if (mp3Reader == null)
             {
-                mp3Reader = new Mp3FileReader(@"D:\UserFiles\Musicas\Audios\rosalina_batista_entrevista.mp3");
+                // searchFile();
+               // string dire = Directory.GetCurrentDirectory();
+                mp3Reader = new Mp3FileReader((string.IsNullOrEmpty(fileName)?fileNameMedia:fileName));
                 outputDevice.Init(mp3Reader);
+
             }
+
+        }
+        private void searchFile() {
+            string fileName = @"..\..\..\Media";
+            string[] arquivos = Directory.GetFiles(fileName, "*mp3", SearchOption.AllDirectories);
 
         }
 
@@ -68,9 +78,8 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             }          
         
         }
-
         public void trackAudioPlay(TimeSpan time) {
-            mp3Reader.CurrentTime = time;//TimeSpan.FromSeconds(5.0);
+            mp3Reader.CurrentTime = time;
         }
 
         public PlaybackState getPlaybackState()

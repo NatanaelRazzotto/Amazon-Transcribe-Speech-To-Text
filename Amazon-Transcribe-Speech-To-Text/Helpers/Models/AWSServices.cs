@@ -69,7 +69,6 @@ namespace AWS_Rekognition_Objects.Helpers.Model
             else
             {
                 throw new ApplicationException("Erro obtendo credenciais");
-               // return false;
             }
 
         }
@@ -115,7 +114,6 @@ namespace AWS_Rekognition_Objects.Helpers.Model
       
         }
 
-
         public async Task<bool> UploadAudioFromS3(string fileName)
         {
             //GetCredentialsAWS();
@@ -156,8 +154,6 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                         Key = fileName,
                         FilePath = ""
                     };
-                    //https://docs.aws.amazon.com/sdkfornet/latest/apidocs/items/TS3TransferTransferUtilityDownloadRequestNET45.html
-                    //https://csharp.hotexamples.com/pt/examples/Amazon.S3.Transfer/TransferUtility/Download/php-transferutility-download-method-examples.html
                     return true;
                 }
                 else
@@ -215,8 +211,7 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                 OutputBucketName = selectedBucketName,
                 LanguageCode = LanguageCode.PtBR,
                 MediaFormat = MediaFormat.Mp3,
-                Settings = new Settings { MaxAlternatives = 5, ShowAlternatives = true,
-                                          MaxSpeakerLabels = 3, ShowSpeakerLabels = true},
+                Settings = new Settings { MaxAlternatives = 3, ShowAlternatives = true },//MaxSpeakerLabels = 3, ShowSpeakerLabels = true
                 TranscriptionJobName = $"Transcribe-MediaFile-{DateTime.Now.ToString("yyyymmddhhmmss")}"
             };
 
@@ -226,16 +221,17 @@ namespace AWS_Rekognition_Objects.Helpers.Model
 
         }
 
-        public async Task getListJobsTranscribe() {
-            CancellationTokenSource cancellation = new CancellationTokenSource();
-            CancellationToken token = cancellation.Token;
+        public async Task<ListTranscriptionJobsResponse> getListJobsTranscribe() {
+
             AmazonTranscribeServiceClient TranscribeClient = new AmazonTranscribeServiceClient(awsCredentials, region);
 
             ListTranscriptionJobsRequest request = new ListTranscriptionJobsRequest
             {
-                Status = TranscriptionJobStatus.COMPLETED
+                Status = TranscriptionJobStatus.COMPLETED,
+                MaxResults = 10
             };
             ListTranscriptionJobsResponse response = await TranscribeClient.ListTranscriptionJobsAsync(request); // token
+            return response;
         }
 
         public async Task requestExecuteTranscribe(string fileName, string selectedBucketName) 
@@ -261,9 +257,9 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                     if (transcriptionJob.TranscriptionJobStatus == TranscriptionJobStatus.COMPLETED)
                     {
                         JobName = extractFileKey(transcriptionJob.Transcript.TranscriptFileUri);
+                        FileNameActual = fileName;
                         incrementProgree = 100;
                         controller.ViewStatusofTranscriptJob(transcriptionJob, incrementProgree);
-                        //  definedFileKey(transcriptionJob.Media.MediaFileUri);
                         runningJobStatus = false;
                     }
                     else
@@ -282,10 +278,6 @@ namespace AWS_Rekognition_Objects.Helpers.Model
                     }
                 }
             }
-            else
-            {
-
-            }  
         }
 
         private string extractFileKey(string mediaFileUri)

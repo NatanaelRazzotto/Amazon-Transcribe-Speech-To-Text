@@ -25,7 +25,6 @@ namespace Amazon_Transcribe_Speech_To_Text
             InitializeComponent();
             controller = new Controller(this);
             List<string> buckets = controller.getLoadS3ListBuckets();
-            //List<string> buckets = null;
             if (buckets != null)
             {
                 foreach (string buckte in buckets)
@@ -34,6 +33,10 @@ namespace Amazon_Transcribe_Speech_To_Text
                     cbBucketsOutputS3.Items.Add(buckte);
                 }
             }
+        }
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            controller.setPlayMedia();
         }
 
         private void btnSearchFiles_Click(object sender, EventArgs e)
@@ -59,6 +62,11 @@ namespace Amazon_Transcribe_Speech_To_Text
                 {
                     MessageBox.Show("Não foi possivel Buscar os Arquivos constidos no Bucket");
                 }
+                else
+                {
+                    controller.setFromListJobs();
+                    tabControlBody.Enabled = true;
+                }
                 
             }
             else
@@ -68,7 +76,68 @@ namespace Amazon_Transcribe_Speech_To_Text
            
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(tbFileAudio.Text))
+            {
+                controller.setFileFromAnalize(Path.GetFileName(tbFileAudio.Text));
+            }
+        }
 
+        private void cbFilesBucket_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if ((cbFilesBucket.SelectedItem != null))//&& (cbFilesBucket.ValueMember != "")
+            {
+                controller.setFileFromAnalize(cbFilesBucket.SelectedItem.ToString());
+            }
+        }
+
+        private void btnAnalizer_Click(object sender, EventArgs e)
+        {
+            pgbAnalizer.Minimum = 0;
+            pgbAnalizer.Maximum = 100;
+            controller.executeTranscribeToS3();
+        }
+
+        private void btnLoadTranscription_Click(object sender, EventArgs e)
+        {
+            controller.TranscribeObject();
+            tabControlBody.SelectedIndex = 1;
+            panel2.Enabled = true;
+        }
+
+        private void trackBarStateAudio_ValueChanged(object sender, EventArgs e)
+        {
+            double timeSelect = trackBarStateAudio.Value;
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            double valueStart = Convert.ToDouble(lblStart.Text);
+            double valueEnd = Convert.ToDouble(lblEnd.Text);
+            int indexSelect = cbAlternative.SelectedIndex;
+            controller.setRemoveContentSelect(valueStart, valueEnd, indexSelect);
+
+        }
+
+        private void btnAddContent_Click(object sender, EventArgs e)
+        {
+            double valueStart = Convert.ToDouble(lblStart.Text);
+            double valueEnd = Convert.ToDouble(lblEnd.Text);
+            string content = txtContent.Text;
+            controller.setModifyContent(valueStart, valueEnd, content);
+        }
+
+        private void btnReGerar_Click(object sender, EventArgs e)
+        {
+            controller.genarateNewContent();
+        }
+
+        private void trackBarStateAudio_Scroll(object sender, EventArgs e)
+        {
+            double timeSelect = trackBarStateAudio.Value;
+            controller.definedPositionAudioMilisseconds(timeSelect);
+        }
         #region Methods
         // Metodos responsaveis pelo populamento dos dados
 
@@ -92,6 +161,22 @@ namespace Amazon_Transcribe_Speech_To_Text
             }
             return false;
         }
+        public bool updateComboNameJobs(List<TranscriptionJobSummary> jobsSummary)
+        {
+            cbJobTranscribe.Items.Clear();
+            if (jobsSummary.Count != 0)
+            {
+                foreach (TranscriptionJobSummary job in jobsSummary)
+                {
+                    cbJobTranscribe.Items.Add(job.TranscriptionJobName);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public bool updateComboNameTranscribes(string nameBucket, List<string> nameTranscribe)
         {
             if (!String.IsNullOrEmpty(nameBucket))
@@ -101,7 +186,7 @@ namespace Amazon_Transcribe_Speech_To_Text
                 {
                     foreach (string item in nameTranscribe)
                     {
-                        cbFilesBucketOutput.Items.Add(item);
+                        cbJobTranscribe.Items.Add(item);
                     }
                     return true;
                 }
@@ -134,34 +219,7 @@ namespace Amazon_Transcribe_Speech_To_Text
         }
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(tbFileAudio.Text))
-            {
-                controller.setFileFromAnalize(Path.GetFileName(tbFileAudio.Text));
-            }
-        }
 
-        private void cbFilesBucket_SelectedValueChanged(object sender, EventArgs e)
-        {
-            if ((cbFilesBucket.SelectedItem != null))//&& (cbFilesBucket.ValueMember != "")
-            {
-                controller.setFileFromAnalize(cbFilesBucket.SelectedItem.ToString());
-            }
-        }
-
-        private void btnAnalizer_Click(object sender, EventArgs e)
-        {
-            pgbAnalizer.Minimum = 0;
-            pgbAnalizer.Maximum = 100;
-            controller.executeTranscribeToS3();
-        }
-
-        private void btnLoadTranscription_Click(object sender, EventArgs e)
-        {
-            controller.TranscribeObject();
-            tabControlBody.SelectedIndex = 1;
-        }
 
         public void setJobProperties(TranscriptionJob transcriptionJob, int incrementProgrees)
         {
@@ -169,15 +227,17 @@ namespace Amazon_Transcribe_Speech_To_Text
             lblNameJob.Text = transcriptionJob.TranscriptionJobName;
             lblStatusJob.Text = transcriptionJob.TranscriptionJobStatus;
             MediaFormat formatMidia = transcriptionJob.MediaFormat;
+            LanguageCode language = transcriptionJob.LanguageCode;
             if (formatMidia == MediaFormat.Mp3)
             {
-                lblFormatMidia.Text = "Mp3";
-            }         
-        }
-
-        private void btnPlay_Click(object sender, EventArgs e)
-        {
-            controller.setPlayMedia();
+                lblFormat.Text = "Mp3";
+            }
+            if (language == LanguageCode.PtBR)
+            {
+                lblLanguage.Text = "PtBr";
+            }
+            lblHertz.Text = transcriptionJob.MediaSampleRateHertz.ToString();
+            
         }
 
         public void displayStatusCurrentProgress(TimeSpan TotalTime, TimeSpan currentAudio)
@@ -203,12 +263,6 @@ namespace Amazon_Transcribe_Speech_To_Text
                     trackBarStateAudio.Value = trackBarStateAudio.Maximum;
                 }
             }
-        }
-
-        private void trackBarStateAudio_ValueChanged(object sender, EventArgs e)
-        {
-            double timeSelect = trackBarStateAudio.Value;
-            //controller.definedPositionAudioMilisseconds(timeSelect);
         }
 
         public void displayTotalTime(TimeSpan totalTime)
@@ -241,7 +295,7 @@ namespace Amazon_Transcribe_Speech_To_Text
                         cbAlternative.Items.Add($"{alternative.content} - Confidence: {alternative.confidence.ToString("F")}%");
                     }
                     cbAlternative.SelectedIndex = 0;
-                    //txtContent.Text = item.alternatives.ElementAt(0).content;
+                    txtContent.Text = item.alternatives.ElementAt(0).content;
                 }
                 lblConfidence.Text = $"{item.averageConfidence}%";
                 lblType.Text = item.type;
@@ -264,44 +318,8 @@ namespace Amazon_Transcribe_Speech_To_Text
                     trackBarStateAudio.Value = trackBarStateAudio.Maximum;
                 }
             }
-        }
+        }  
 
-        private void cbAlternative_SelectedValueChanged(object sender, EventArgs e)
-        {
-        }
 
-        private void cbAlternative_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-           
-        }
-
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            double valueStart = Convert.ToDouble(lblStart.Text);
-            double valueEnd = Convert.ToDouble(lblEnd.Text);
-            int indexSelect = cbAlternative.SelectedIndex;
-            controller.setRemoveContentSelect(valueStart, valueEnd, indexSelect);
-
-        }
-
-        private void btnAddContent_Click(object sender, EventArgs e)
-        {
-            double valueStart = Convert.ToDouble(lblStart.Text);
-            double valueEnd = Convert.ToDouble(lblEnd.Text);
-            string content = txtContent.Text;
-            controller.setModifyContent(valueStart, valueEnd, content);
-        }
-
-        private void btnReGerar_Click(object sender, EventArgs e)
-        {
-            controller.genarateNewContent();
-        }
-
-        private void trackBarStateAudio_Scroll(object sender, EventArgs e)
-        {
-            double timeSelect = trackBarStateAudio.Value;
-            controller.definedPositionAudioMilisseconds(timeSelect);
-        }
     }
 }

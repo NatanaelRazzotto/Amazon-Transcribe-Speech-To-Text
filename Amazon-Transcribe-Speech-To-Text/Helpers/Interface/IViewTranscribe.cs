@@ -16,10 +16,10 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Interface
        public Task displayStatusProgressFile(bool state, string fileName = null);
        public void releaseTranscript(string file);
        public void setJobProperties(TranscriptionJob transcriptionJob, int incrementProgrees);
-        // public void displayStatusCurrentProgress(TimeSpan TotalTime, TimeSpan currentAudio);
         public void displayTotalTime(TimeSpan totalTime);
         public void bindTextContent(List<Models.Entity.Transcript> contentText);
         public void displayTrancribe(Item item);
         public void displayStatusCurrentProgress(TimeSpan currentAudio);
+        public bool updateComboNameJobs(List<TranscriptionJobSummary> jobsSummary);
     }
 }

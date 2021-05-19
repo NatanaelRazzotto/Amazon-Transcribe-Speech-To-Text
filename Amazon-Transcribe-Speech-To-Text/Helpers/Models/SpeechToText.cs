@@ -28,7 +28,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             if (!String.IsNullOrEmpty(jsonString))
             {
                 transcribed = JsonConvert.DeserializeObject<Transcribed>(jsonString);
-                await playerMedia.newFileAudio();
+                await playerMedia.newFileAudio("");//awsService.fileName;
                 TimeSpan TotalTime = playerMedia.getTotalTimeAudio();
                 ResultsTranscribed results = transcribed.results;
                 setAverageConfidenceItem(results.items);
@@ -93,7 +93,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             return itemSelect;
 
         }
-        public void regenerate()
+        public List<Transcript> regenerate()
         {
             List<Item> items = transcribed.results.items;
             string content = "";
@@ -118,6 +118,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             transcript.transcript = content;
             transcribed.results.transcripts.Clear();
             transcribed.results.transcripts.Add(transcript);
+            return transcribed.results.transcripts;
         }
         public Alternatives searchMaxConfidence(Item item) {
             float confidences = 0;
@@ -144,8 +145,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models.Entity
             Item itemSelect = items.Find(x => (x.start_time == valueStart) && (x.end_time == valueEnd));
             if (!itemSelect.Equals(null))
             {
-                // bool checkAlternative = itemSelect.alternatives.Any(x => x.content.Equals(content));
-                Alternatives checkAlternative = itemSelect.alternatives.Find(x => x.changed.Equals(true));
+               Alternatives checkAlternative = itemSelect.alternatives.Find(x => x.changed.Equals(true));
                 if (checkAlternative == null)
                 {
                     Alternatives alternative = new Alternatives

@@ -20,7 +20,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         private AWSServices awsServices;
         private PlayerMedia playerMedia;
         private SpeechToText speechToText;
-        ///private Transcribed transcribed;
+
         public Controller(IViewTranscribe formTranscribe)
         {
             this.formTranscribe = formTranscribe;
@@ -56,7 +56,7 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         public void displayParametersInitials(TimeSpan totalTime, List<Entity.Transcript> contentText)
         {
             formTranscribe.displayTotalTime(totalTime);
-            formTranscribe.bindTextContent(contentText);//
+            formTranscribe.bindTextContent(contentText);
         }
 
         public async Task displayParametersCurrents(TimeSpan currentAudio, Item item) {
@@ -64,12 +64,21 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
             formTranscribe.displayTrancribe(item);
         }
 
-
         public bool setFromNameBuckets(string bucketInput, string bucketOutput)
         {
             awsServices.setBucktes(bucketInput, bucketOutput);
             return updateComboFileOnBucket(bucketInput);
 
+        }
+
+        public async void setFromListJobs()
+        {
+            ListTranscriptionJobsResponse jobsResponse = await awsServices.getListJobsTranscribe();
+            List<TranscriptionJobSummary> jobsSummary = jobsResponse.TranscriptionJobSummaries;
+            if (jobsSummary.Count != 0)
+            {
+                bool validate = formTranscribe.updateComboNameJobs(jobsSummary);
+            }
         }
         public bool updateComboFileOnBucket(string bucket)
         {
@@ -111,12 +120,10 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         #region controlesAudio
         public async void setPlayMedia()
         {
-            //speechToText = new SpeechToText(this, awsServices);//
             speechToText.controlExecutePlayer();
         }
         public void definedPositionAudioMilisseconds(double timeSelect)
         {
-            //double newTimeSelect = Convert.ToDouble(timeSelect);
             speechToText.defineNewCurrentTimeMilisseconds(timeSelect);
         }
 
@@ -146,8 +153,8 @@ namespace Amazon_Transcribe_Speech_To_Text.Helpers.Models
         }
 
         public void genarateNewContent() {
-            speechToText.regenerate();
-            //formTranscribe.bindTextContent(contentText);//
+            List<Entity.Transcript> contentText = speechToText.regenerate();
+            formTranscribe.bindTextContent(contentText);
         }
 
 
